@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+
+<context:property-placeholder location="/WEB-INF/props/jdbc.properties" />
+
+	<context:annotation-config></context:annotation-config>
+
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+
+
+	<!-- <bean id="offerDAO" class="kr.ac.hansung.csemall.OfferDAO"> -->
+	<!-- <property name="dataSource" ref="dataSource"></property> -->
+	<!-- 프로펄티를 제거해주면 Autowired annotation을 해준 후 context에서 annotation을 활성화를 해주어야지 
+		nullpoint가 뜨지 않고 돌아간다. -->
+	<!-- </bean> -->
+
+	<!-- 패키지를 스캔해서 Component가 있는곳을 보고 해당되는 클래스를 bean에 등록해준다. 이걸해주면 위에있는 bean을 
+		안해줘도 된다. -->
+	<context:component-scan base-package="kr.ac.hansung.dao"></context:component-scan>
+
+</beans>
